@@ -160,12 +160,25 @@ coreHelpers = function (ghost) {
     //
     ghost.registerThemeHelper('excerpt', function (options) {
         var truncateOptions = (options || {}).hash || {},
-            excerpt;
+            excerpt = "";
 
         truncateOptions = _.pick(truncateOptions, ['words', 'characters']);
 
         /*jslint regexp:true */
-        excerpt = String(this.html).replace(/<\/?[^>]+>/gi, '');
+        var str = String(this.html);
+        var regex =  /\<img.*?src="(.*?)"/;
+        
+        var src = regex.exec(str);
+        var img = null;
+        
+        if(src){
+            var img = src[0] + ">";
+        }
+
+        if(img)
+            excerpt = img; 
+        excerpt += String(this.html).replace(/<\/?[^>]+>/gi, '').replace(/\<img.*?src="(.*?)"/, '');
+
         /*jslint regexp:false */
 
         if (!truncateOptions.words && !truncateOptions.characters) {
