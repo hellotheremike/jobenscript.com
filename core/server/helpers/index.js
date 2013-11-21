@@ -166,18 +166,18 @@ coreHelpers = function (ghost) {
 
         /*jslint regexp:true */
         var str = String(this.html);
-        var regex =  /\<img.*?src="(.*?)"/;
+        var regex =  /<img.*?src="(.*?)"/;
         
         var src = regex.exec(str);
         var img = null;
         
-        if(src){
+        if(src)
             var img = src[0] + ">";
-        }
 
         if(img)
-            excerpt = img; 
-        excerpt += String(this.html).replace(/<\/?[^>]+>/gi, '').replace(/\<img.*?src="(.*?)"/, '');
+            excerpt = img;
+
+        excerpt += String(this.html).replace(/\<img.*?src="(.*?)"/, '').replace(/<pre[^]*?<\/pre>/, '').replace(/<\/?[^>]+>/gi, '');
 
         /*jslint regexp:false */
 
